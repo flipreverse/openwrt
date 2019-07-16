@@ -1,9 +1,13 @@
 BOARDNAME := Generic devices with NAND flash
-FEATURES += squashfs nand rtc
+
+# SPI NAND support requires at least Linux 4.19
+KERNEL_PATCHVER:=4.19
+
+FEATURES += squashfs nand
 
 DEFAULT_PACKAGES += wpad-basic
 
 define Target/Description
-	Build firmware for Atheros AR71xx/AR913x based boards with
-	NAND flash, e.g. Netgear WNDR4300.
+	Firmware for boards based on MIPS 24kc Atheros/Qualcomm SoCs
+	in the ar72xx and subsequent generations with support for NAND flash
 endef

@@ -1,0 +1,10 @@
+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+/dts-v1/;
+
+#include "qca9563_glinet_gl-ar750s.dtsi"
+
+/ {
+	compatible = "glinet,gl-ar750s-nand", "qca,qca9563";
+};
+
+/delete-node/ &nor_firmware;

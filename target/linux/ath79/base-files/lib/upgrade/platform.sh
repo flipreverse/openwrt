@@ -1,3 +1,4 @@
+#!/bin/sh
 #
 # Copyright (C) 2011 OpenWrt.org
 #
@@ -32,14 +33,34 @@ redboot_fis_do_upgrade() {
 	fi
 }
 
+
+# During image creation the "board name" is of the format mfgr_board-name
+# However, on a running device it is of the format mfgr,board-name
+
+comma_to_underscore() {
+	echo "${1%%,*}_${1#*,}"
+}
+
 platform_check_image() {
-	return 0
+	local board=$(board_name)
+
+	case "$board" in
+	glinet,gl-ar750s-nand)
+		nand_do_platform_check "$(comma_to_underscore "$board")" "$IMAGE"
+		;;
+	*)
+		return 0
+		;;
+	esac
 }
 
 platform_do_upgrade() {
 	local board=$(board_name)
 
 	case "$board" in
+	glinet,gl-ar750s-nand)
+		nand_do_upgrade "$ARGV"
+		;;
 	jjplus,ja76pf2)
 		redboot_fis_do_upgrade "$ARGV" linux
 		;;

@@ -77,16 +77,26 @@
 	};
 };
 
+&gpio {
+	usb_power {
+		gpio-hog;
+		gpios = <7 GPIO_ACTIVE_HIGH>;
+		output-high;
+		line-name = "usb-power";
+	};
+};
+
 &spi {
 	status = "okay";
-	num-cs = <0>;
+	num-cs = <2>;
+	cs-gpios = <0>, <0>;
 
-	flash@0 {
-		compatible = "jedec,spi-nor";
-		reg = <0>;
-		spi-max-frequency = <25000000>;
+	flash_nor: flash@0 {
+ 		compatible = "jedec,spi-nor";
+ 		reg = <0>;
+ 		spi-max-frequency = <25000000>;
 
-		partitions {
+		nor_partitions: partitions {
 			compatible = "fixed-partitions";
 			#address-cells = <1>;
 			#size-cells = <1>;
@@ -108,10 +118,37 @@
 				read-only;
 			};
 
-			partition@60000 {
+			nor_firmware: partition@60000 {
 				compatible = "denx,uimage";
 				label = "firmware";
 				reg = <0x060000 0xfa0000>;
+			};
+
+			nor_kernel: partition_alt@60000 {
+				label = "kernel";
+				reg = <0x060000 0x200000>;
+			};
+
+			nor_rootfs: parition_alt@260000 {
+				label = "nor_rootfs";
+				reg = <0x260000 0xda0000>;
+			};
+		};
+	};
+	
+	flash_nand: flash@1 {
+		compatible = "spi-nand";
+		reg = <1>;
+		spi-max-frequency = <25000000>;
+		
+		nand_partitions: partitions {
+			compatible = "fixed-partitions";
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			nand_ubi: partition@0 {
+				label = "ubi";
+				reg = <0x000000 0x8000000>;
 			};
 		};
 	};
