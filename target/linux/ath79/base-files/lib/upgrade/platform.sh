@@ -61,15 +61,19 @@ platform_do_upgrade() {
 	glinet,gl-ar750s-nand)
 		nand_do_upgrade "$ARGV"
 		;;
+	adtran,bsap1800-v2|\
+	adtran,bsap1840)
+		redboot_fis_do_upgrade "$1" vmlinux_2
+		;;
 	jjplus,ja76pf2)
-		redboot_fis_do_upgrade "$ARGV" linux
+		redboot_fis_do_upgrade "$1" linux
 		;;
 	ubnt,routerstation|\
 	ubnt,routerstation-pro)
-		redboot_fis_do_upgrade "$ARGV" kernel
+		redboot_fis_do_upgrade "$1" kernel
 		;;
 	*)
-		default_do_upgrade "$ARGV"
+		default_do_upgrade "$1"
 		;;
 	esac
 }
