@@ -59,7 +59,7 @@ platform_do_upgrade() {
 
 	case "$board" in
 	glinet,gl-ar750s-nand)
-		nand_do_upgrade "$ARGV"
+		nand_do_upgrade "$1"
 		;;
 	adtran,bsap1800-v2|\
 	adtran,bsap1840)
