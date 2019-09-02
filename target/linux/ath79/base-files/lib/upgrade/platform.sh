@@ -46,7 +46,7 @@ platform_check_image() {
 
 	case "$board" in
 	glinet,gl-ar750s-nand)
-		nand_do_platform_check "$(comma_to_underscore "$board")" "$IMAGE"
+		nand_do_platform_check "$(comma_to_underscore "$board")" "$1"
 		;;
 	*)
 		return 0
